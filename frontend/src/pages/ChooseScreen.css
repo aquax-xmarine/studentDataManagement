@@ -1,0 +1,97 @@
+.choose-screen {
+  box-sizing: border-box;
+  position: relative;
+  min-height: 100vh;
+  padding: 48px 20px;
+  background: #f7f5f0;
+  font-family: 'Montserrat', -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.choose-eyebrow {
+  position: absolute;
+  top: 48px;
+  left: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #b8860b;
+}
+
+.choose-heading {
+  position: absolute;
+  top: 170px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+  color: #1f2a27;
+  line-height: 1.2;
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+.option-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+  max-width: 380px;
+}
+
+.option-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-align: left;
+  background: #34443f;
+  border: none;
+  border-radius: 18px;
+  padding: 40px 40px;
+  min-height: 88px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.option-card:hover {
+  background: #3f544d;
+}
+
+.option-card:active {
+  transform: scale(0.98);
+}
+
+.option-card__icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(184, 134, 11, 0.15);
+  color: #d4a52c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.option-card__text {
+  display: flex;
+  flex-direction: column;
+}
+
+.option-title {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+
+.option-subtitle {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 14px;
+}

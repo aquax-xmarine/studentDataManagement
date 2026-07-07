@@ -44,7 +44,7 @@ function ChooseScreen() {
   return (
     <div className="choose-screen">
       <span className="choose-eyebrow">Classroom</span>
-      <h1 className="choose-heading">Choose one to begin</h1>
+      {/* <h1 className="choose-heading">Choose one to begin</h1> */}
       <div className="option-list">
         {options.map((opt) => (
           <OptionCard

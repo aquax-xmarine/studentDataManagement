@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import ChooseScreen from './pages/ChooseScreen'
-import DuringClass from './pages/DuringClass'
+import DuringClass from './pages/ClassGroupScreen'
 import Analysis from './pages/Analysis'
 import Settings from './pages/Settings'
 

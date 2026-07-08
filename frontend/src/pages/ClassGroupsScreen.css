@@ -1,0 +1,68 @@
+.class-groups-screen {
+  box-sizing: border-box;
+  position: relative;
+  min-height: 100vh;
+  padding: 48px 20px 40px;
+  background: #f7f5f0;
+  font-family: 'Montserrat', -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.class-groups-eyebrow {
+  align-self: flex-start;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #b8860b;
+  margin-bottom: 28px;
+}
+
+.class-group-list {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  width: 100%;
+  max-width: 380px;
+}
+
+.class-group-heading {
+  font-size: 20px;
+  font-weight: 700;
+  color: #2f3e3a;
+  margin: 0 0 16px;
+  letter-spacing: 0.01em;
+}
+
+.session-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.session-square {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  border: none;
+  border-radius: 20px;
+  background: #34443f;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.session-square:hover {
+  background: #3f544d;
+}
+
+.session-square:active {
+  transform: scale(0.96);
+}
+
+.session-square:focus-visible {
+  outline: 2px solid #b8860b;
+  outline-offset: 2px;
+}

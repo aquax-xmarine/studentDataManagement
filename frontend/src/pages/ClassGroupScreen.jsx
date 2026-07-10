@@ -4,13 +4,13 @@ import './ClassGroupsScreen.css'
 
 const classGroups = [
   {
-    id: '11-calculus',
+    id: '11-Calculus',
     grade: '11',
     subject: 'Calculus',
     sessionCount: 10
   },
   {
-    id: '12-algebra',
+    id: '12-Algebra',
     grade: '12',
     subject: 'Algebra',
     sessionCount: 1
@@ -35,7 +35,7 @@ function ClassGroupsScreen() {
                 <SessionSquare
                   key={`${group.id}-${i + 1}`}
                   label={`E${i + 1}`}
-                  onClick={() => navigate(`/during-class/${group.id}/session/${i + 1}`)}
+                  onClick={() => navigate(`/during-class/${group.id}/session/E${i + 1}`)}
                 />
               ))}
             </div>

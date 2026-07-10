@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import StudentRow from '../components/StudentRow'
 import './ClassSessionScreen.css'
@@ -29,7 +29,35 @@ function ClassSessionScreen() {
   const { groupId, sessionId } = useParams()
   const navigate = useNavigate()
 
-  const [students, setStudents] = useState(mockSession.students)
+  const [students, setStudents] = useState([])
+
+  useEffect(() => {
+
+    async function fetchStudents() {
+      try {
+
+        const response = await fetch(
+          `http://localhost:3000/api/students/${groupId}/${sessionId}`
+        )
+
+        const data = await response.json()
+
+        setStudents(data)
+
+      } catch (error) {
+
+        console.error(
+          "Error fetching students:",
+          error
+        )
+
+      }
+    }
+
+
+    fetchStudents()
+
+  }, [groupId, sessionId])
 
   const handleSaveNote = (studentId, note) => {
     setStudents((prev) =>
@@ -42,7 +70,7 @@ function ClassSessionScreen() {
   return (
     <div className="page-screen">
       <span className="class-groups-eyebrow">Classroom</span>
-  
+
 
       <h1 className="class-session-heading">
         {mockSession.code} - {mockSession.subject}
@@ -100,7 +128,7 @@ function ClassSessionScreen() {
           {students.map((s, i) => (
             <StudentRow
               key={s.id}
-              index={i + 1}
+              index={s.roll_no}
               name={s.name}
               note={s.note}
               onSaveNote={(note) => handleSaveNote(s.id, note)}

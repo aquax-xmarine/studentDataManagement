@@ -34,7 +34,7 @@ function ClassGroupsScreen() {
               {Array.from({ length: group.sessionCount }, (_, i) => (
                 <SessionSquare
                   key={`${group.id}-${i + 1}`}
-                  label={`${group.grade} ${group.subject} session ${i + 1}`}
+                  label={`E${i + 1}`}
                   onClick={() => navigate(`/during-class/${group.id}/session/${i + 1}`)}
                 />
               ))}

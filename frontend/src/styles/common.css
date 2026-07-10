@@ -1,0 +1,28 @@
+.page-screen {
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: 48px 20px 40px;
+  background: #f7f5f0;
+  font-family: 'Montserrat', -apple-system, 'Segoe UI', Roboto, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.page-content {
+  width: 100%;
+  max-width: 380px;
+}
+
+.class-groups-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #b8860b;
+  margin-bottom: 28px;
+}
+
+.session-square {
+  color: white;
+}

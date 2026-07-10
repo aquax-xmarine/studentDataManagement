@@ -29,7 +29,7 @@ services:
 
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password123
+      POSTGRES_PASSWORD: 24119
       POSTGRES_DB: studentdb
 
     ports:

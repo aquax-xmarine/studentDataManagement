@@ -1,3 +1,5 @@
+import '../styles/common.css'
+
 function SessionSquare({ label, onClick }) {
   return (
     <button
@@ -5,7 +7,9 @@ function SessionSquare({ label, onClick }) {
       className="session-square"
       onClick={onClick}
       aria-label={label}
-    />
+    >
+    {label}
+    </button>
 
   )
 }

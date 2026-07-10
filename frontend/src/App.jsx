@@ -1,8 +1,11 @@
+console.log("APP UPDATED", Date.now());
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import ChooseScreen from './pages/ChooseScreen'
 import DuringClass from './pages/ClassGroupScreen'
 import Analysis from './pages/Analysis'
 import Settings from './pages/Settings'
+import ClassSessionScreen from './pages/ClassSessionScreen'
 
 function App() {
   return (
@@ -12,6 +15,7 @@ function App() {
         <Route path="/during-class" element={<DuringClass />} />
         <Route path="/analysis" element={<Analysis />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/during-class/:groupId/session/:sessionId" element={<ClassSessionScreen />} />
       </Routes>
     </BrowserRouter>
   )

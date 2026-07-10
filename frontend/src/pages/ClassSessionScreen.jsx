@@ -122,7 +122,7 @@ function ClassSessionScreen() {
       </section>
 
       {/* ---- students ---- */}
-      <section className="session-section">
+      {/* <section className="session-section">
         <h2 className="students-heading">Students</h2>
         <div className="student-list">
           {students.map((s, i) => (
@@ -135,7 +135,7 @@ function ClassSessionScreen() {
             />
           ))}
         </div>
-      </section>
+      </section> */}
     </div>
   )
 }

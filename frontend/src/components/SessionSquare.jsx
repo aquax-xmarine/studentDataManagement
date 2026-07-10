@@ -1,6 +1,8 @@
 import '../styles/common.css'
 
 function SessionSquare({ label, onClick }) {
+  console.log("LABEL:", label)
+  
   return (
     <button
       type="button"

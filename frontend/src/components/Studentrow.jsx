@@ -1,3 +1,4 @@
+//Studentrow renamed to StudentRow
 import { useState } from 'react'
 
 function StudentRow({ index, name, note, onSaveNote }) {

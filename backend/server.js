@@ -21,6 +21,53 @@ app.get("/", async(req,res)=>{
     }
 });
 
+app.post("/api/login", async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        const result = await pool.query(
+            `
+            SELECT *
+            FROM users
+            WHERE email = $1
+            `,
+            [email]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(401).json({
+                message: "Invalid email or password"
+            });
+        }
+
+        const user = result.rows[0];
+
+        // Development only (replace with bcrypt later)
+        if (user.password !== password) {
+            return res.status(401).json({
+                message: "Invalid email or password"
+            });
+        }
+
+        res.json({
+            message: "Login successful",
+            user: {
+                id: user.id,
+                email: user.email,
+                name: user.name
+            }
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: error.message
+        });
+    }
+});
+
+
+
 app.get("/api/students/:groupId/:section", async(req,res)=>{
     try{
         const { groupId, section } = req.params;

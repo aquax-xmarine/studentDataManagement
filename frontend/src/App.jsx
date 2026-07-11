@@ -6,7 +6,7 @@ import DuringClass from './pages/ClassGroupScreen'
 import Analysis from './pages/Analysis'
 import Settings from './pages/Settings'
 import ClassSessionScreen from './pages/ClassSessionScreen'
-import Loginpage from './pages/Loginpage'
+import Loginpage from './pages/Login'
 
 function App() {
   return (

@@ -12,11 +12,11 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<ChooseScreen />} />
+        <Route path="/" element={<Loginpage />} />
+        <Route path="/choose-screen" element={<ChooseScreen />} />
         <Route path="/during-class" element={<DuringClass />} />
         <Route path="/analysis" element={<Analysis />} />
         <Route path="/settings" element={<Settings />} />
-        <Route path="/login" element={<Loginpage />} />
         <Route path="/during-class/:groupId/session/:sessionId" element={<ClassSessionScreen />} />
       </Routes>
     </BrowserRouter>

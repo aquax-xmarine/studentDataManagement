@@ -27,7 +27,8 @@ function Login() {
 
       if (response.ok) {
         console.log(data);
-        navigate("/");
+        navigate("/choose-screen");
+        console.log("Navigate")
       } else {
         alert(data.message);
       }

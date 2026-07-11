@@ -6,6 +6,7 @@ import DuringClass from './pages/ClassGroupScreen'
 import Analysis from './pages/Analysis'
 import Settings from './pages/Settings'
 import ClassSessionScreen from './pages/ClassSessionScreen'
+import Loginpage from './pages/Loginpage'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/during-class" element={<DuringClass />} />
         <Route path="/analysis" element={<Analysis />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/login" element={<Loginpage />} />
         <Route path="/during-class/:groupId/session/:sessionId" element={<ClassSessionScreen />} />
       </Routes>
     </BrowserRouter>

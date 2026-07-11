@@ -15,13 +15,6 @@ const mockSession = {
     { id: 's5', index: 5, name: 'Nikisha maaya', note: '<3' },
     { id: 's5b', index: 5, name: 'Nikisha maaya', note: '<3' },
     { id: 's5c', index: 5, name: 'Nikisha maaya', note: '<3' }
-  ],
-  students: [
-    { id: 's1', name: 'Aarav Sharma', note: '' },
-    { id: 's2', name: 'Bina Gurung', note: '' },
-    { id: 's3', name: 'Chandra Rai', note: '' },
-    { id: 's4', name: 'Diya Thapa', note: '' },
-    { id: 's5', name: 'Nikisha maaya', note: '<3' }
   ]
 }
 
@@ -122,20 +115,24 @@ function ClassSessionScreen() {
       </section>
 
       {/* ---- students ---- */}
-      {/* <section className="session-section">
+      <section className="session-section">
         <h2 className="students-heading">Students</h2>
         <div className="student-list">
-          {students.map((s, i) => (
-            <StudentRow
+          {students.map((s) => (
+            <button
               key={s.id}
-              index={s.roll_no}
-              name={s.name}
-              note={s.note}
-              onSaveNote={(note) => handleSaveNote(s.id, note)}
-            />
+              type="button"
+              className="student-row__header"
+              onClick={() => navigate(`/during-class/${groupId}/session/${sessionId}/students/${s.id}`)}
+            >
+              <span className="student-row__name">
+                {s.roll_no}. {s.name}
+                {s.note ? <span className="student-row__note-preview"> ({s.note})</span> : null}
+              </span>
+            </button>
           ))}
         </div>
-      </section> */}
+      </section>
     </div>
   )
 }

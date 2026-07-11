@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import StudentRow from '../components/StudentRow'
-import './ClassSessionScreen.css'
+import '../styles/ClassSessionScreen.css'
 import '../styles/common.css'
 
 // Replace this with real data fetched using groupId / sessionId from the URL

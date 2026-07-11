@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import OptionCard from '../components/OptionCard'
-import './ChooseScreen.css'
+import '../styles/ChooseScreen.css'
 
 const options = [
   {

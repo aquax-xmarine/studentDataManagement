@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import SessionSquare from '../components/SessionSquare'
-import './ClassGroupsScreen.css'
+import '../styles/ClassGroupsScreen.css'
 
 const classGroups = [
   {

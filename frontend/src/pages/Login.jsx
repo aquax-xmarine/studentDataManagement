@@ -13,6 +13,7 @@ function Login() {
 
   return (
     <div className="login-container">
+      <span className="choose-eyebrow">Classroom</span>
       <div className="login-card">
         <h2>Student Data Management</h2>
         <p className="subtitle">Sign in to manage your classroom records</p>

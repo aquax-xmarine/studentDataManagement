@@ -1,3 +1,4 @@
+console.log("SERVER STARTED");
 const express = require("express");
 const pool = require("./db");
 
@@ -7,15 +8,15 @@ const cors = require("cors");
 app.use(express.json());
 app.use(cors());
 
-app.get("/", async(req,res)=>{
-    try{
+app.get("/", async (req, res) => {
+    try {
         const result = await pool.query(
             "SELECT NOW()"
         );
 
         res.json(result.rows);
 
-    }catch(error){
+    } catch (error) {
         console.log(error);
         res.status(500).send(error.message);
     }
@@ -66,10 +67,46 @@ app.post("/api/login", async (req, res) => {
     }
 });
 
+app.get("/api/assignments/:assignmentId/students", async (req, res) => {
+    console.log("===== STUDENTS ROUTE HIT =====");
+    try {
+        const { assignmentId } = req.params;
+        console.log("Assignment ID:", assignmentId);
+
+        const result = await pool.query(
+            `
+            SELECT
+                s.id,
+                s.roll_no,
+                s.name,
+                ar.marks,
+                ar.remarks
+            FROM assignments a
+            JOIN students s
+                ON LOWER(s.subject) = LOWER(a.subject)
+                AND s.section = a.section
+            LEFT JOIN assignment_results ar
+                ON ar.student_id = s.id
+                AND ar.assignment_id = a.id
+            WHERE a.id = $1
+            ORDER BY s.roll_no;
+            `,
+            [assignmentId]
+        );
+        console.log(result.rows);
+        res.json(result.rows);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            error: error.message
+        });
+    }
+});
 
 
-app.get("/api/students/:groupId/:section", async(req,res)=>{
-    try{
+app.get("/api/students/:groupId/:section", async (req, res) => {
+    try {
         const { groupId, section } = req.params;
         const [grade, subject] = groupId.split("-");
 
@@ -82,15 +119,15 @@ app.get("/api/students/:groupId/:section", async(req,res)=>{
             AND section = $3
             `,
             [
-              grade,
-              subject.toLowerCase(),
-              section
+                grade,
+                subject.toLowerCase(),
+                section
             ]
         );
 
         res.json(result.rows);
 
-    }catch(error){
+    } catch (error) {
 
         console.log(error);
         res.status(500).json({
@@ -100,6 +137,94 @@ app.get("/api/students/:groupId/:section", async(req,res)=>{
     }
 });
 
-app.listen(3000,()=>{
+
+app.get("/api/assignments/:groupId/:section", async (req, res) => {
+
+    const { groupId, section } = req.params;
+
+    const [grade, subject] = groupId.split("-");
+
+    const result = await pool.query(
+        `
+        SELECT *
+        FROM assignments
+        WHERE subject = $1
+        AND section = $2
+        ORDER BY created_at DESC
+        `,
+        [
+            subject,
+            section
+        ]
+    );
+
+    res.json(result.rows);
+
+});
+
+
+
+app.post("/api/assignments", async (req, res) => {
+
+    const { exercise, groupId, section } = req.body;
+
+    const [grade, subject] = groupId.split("-");
+
+    await pool.query(
+        `
+        INSERT INTO assignments
+        (exercise, subject, section)
+        VALUES ($1,$2,$3)
+        `,
+        [exercise, subject, section]
+    );
+
+    res.json({ message: "Assignment created" });
+
+});
+
+
+
+
+
+
+app.post("/api/assignments/:assignmentId/student/:studentId", async (req, res) => {
+    try {
+        const { assignmentId, studentId } = req.params;
+        const { marks } = req.body;
+
+        const result = await pool.query(
+            `
+            INSERT INTO assignment_results
+            (assignment_id, student_id, marks)
+            VALUES ($1, $2, $3)
+
+            ON CONFLICT (assignment_id, student_id)
+            DO UPDATE
+            SET marks = EXCLUDED.marks
+
+            RETURNING *;
+            `,
+            [assignmentId, studentId, marks]
+        );
+
+        res.json(result.rows[0]);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            error: error.message
+        });
+    }
+});
+
+
+
+
+
+
+
+
+app.listen(3000, () => {
     console.log("Server running on port 3000");
 });

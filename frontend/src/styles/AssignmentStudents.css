@@ -1,0 +1,94 @@
+.assignment-students-page {
+  box-sizing: border-box;
+  position: relative;
+  min-height: 100vh;
+  padding: 48px 20px 40px;
+  background: #ffffff;
+  font-family: 'Montserrat', -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.assignment-students-title {
+  width: 100%;
+  max-width: 380px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #2f3e3a;
+  margin: 0 0 20px;
+  letter-spacing: 0.01em;
+}
+
+.assignment-students-card {
+  width: 100%;
+  max-width: 380px;
+  background: #a3c0b3;
+  border-radius: 24px;
+  padding: 18px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.student-mark-row {
+  width: 100%;
+  box-sizing: border-box;
+  background: #34443f;
+  border-radius: 14px;
+  padding: 12px 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.student-mark-row__name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.student-mark-row__marks {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.student-mark-button {
+  background: none;
+  border: none;
+  padding: 4px;
+  color: #e0a778;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.student-mark-button:hover {
+  color: #eec39b;
+}
+
+.student-mark-button:active {
+  transform: scale(0.9);
+}
+
+.student-mark-button.is-selected {
+  color: #ffffff;
+}
+
+.student-mark-button:focus-visible {
+  outline: 2px solid #b8860b;
+  outline-offset: 2px;
+  border-radius: 4px;
+}

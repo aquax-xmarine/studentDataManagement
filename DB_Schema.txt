@@ -3,7 +3,8 @@ CREATE TABLE students (
     roll_no INT NOT NULL,
     name VARCHAR(100) NOT NULL,
     subject VARCHAR(100) NOT NULL,
-    section VARCHAR(10) NOT NULL
+    section VARCHAR(10) NOT NULL,
+    grade INT,
 );
 
 
@@ -11,6 +12,7 @@ ALTER TABLE students
 ADD CONSTRAINT unique_student
 UNIQUE (section, subject, roll_no);
 
+----------------------------------------
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
@@ -22,3 +24,77 @@ CREATE TABLE users (
 INSERT INTO users (name, email, password)
 VALUES
 ('Admin', 'admin@test.com', '123456');
+
+-----------------------------------------
+
+CREATE TABLE teacher_schedule (
+    id SERIAL PRIMARY KEY,
+    day VARCHAR(15) NOT NULL,
+    section VARCHAR(10) NOT NULL,
+    room VARCHAR(10),
+    time_slot VARCHAR(20) NOT NULL,
+    subject VARCHAR(50) NOT NULL,
+    grade INT
+);
+
+
+ALTER TABLE teacher_schedule
+ADD CONSTRAINT unique_teacher_schedule
+UNIQUE (day, section, time_slot, subject);
+
+-----------------------------------------
+
+CREATE TABLE assignments (
+    id SERIAL PRIMARY KEY,
+    exercise VARCHAR(100) NOT NULL,
+    subject VARCHAR(100) NOT NULL,
+    section VARCHAR(10) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-----------------------------------------
+
+
+CREATE TABLE assignment_results (
+    id SERIAL PRIMARY KEY,
+
+    assignment_id INT NOT NULL,
+    student_id INT NOT NULL,
+
+    marks INT CHECK (marks BETWEEN 1 AND 5),
+    remarks TEXT,
+
+    FOREIGN KEY (assignment_id)
+        REFERENCES assignments(id)
+        ON DELETE CASCADE,
+
+    FOREIGN KEY (student_id)
+        REFERENCES students(id)
+        ON DELETE CASCADE,
+
+    UNIQUE (assignment_id, student_id)
+);
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+
+DETAILS
+topic_covered students
+
+
+
+NOTES
+1. Edit and delete buttons
+
+
+
+

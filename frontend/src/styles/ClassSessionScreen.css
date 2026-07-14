@@ -172,6 +172,13 @@
   padding: 18px;
   cursor: pointer;
   transition: background 0.15s ease, transform 0.15s ease;
+
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column; /* Stacked vertically */
+  gap: 16px;              /* Space between buttons */
 }
 
 .add-details-button:hover {

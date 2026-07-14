@@ -6,8 +6,6 @@ import '../styles/common.css'
 
 // Replace this with real data fetched using groupId / sessionId from the URL
 const mockSession = {
-  code: 'E-3',
-  subject: 'Calculus',
   taught: 7,
   remaining: 8,
   lastCompleted: 'Exercise 14.3 - 14 c',
@@ -23,6 +21,8 @@ function ClassSessionScreen() {
   const navigate = useNavigate()
 
   const [students, setStudents] = useState([])
+
+  const [, subject] = groupId.split("-");
 
   useEffect(() => {
 
@@ -66,12 +66,12 @@ function ClassSessionScreen() {
 
 
       <h1 className="class-session-heading">
-        {mockSession.code} - {mockSession.subject}
+        {sessionId} - {subject}
       </h1>
 
       {/* ---- previous class ---- */}
       <section className="session-section">
-        <h2 className="session-label">Previous class</h2>
+        <h2 className="session-label">Class Status</h2>
 
         <div className="stat-card">
           <div className="stat-card__item">
@@ -84,6 +84,8 @@ function ClassSessionScreen() {
             <span className="stat-card__word">remaining</span>
           </div>
         </div>
+
+        <h2 className="session-label">Previous Class</h2>
 
         <div className="last-completed-card">
           <span className="last-completed-card__label">last completed</span>
@@ -104,18 +106,32 @@ function ClassSessionScreen() {
 
       {/* ---- upcoming class ---- */}
       <section className="session-section">
-        <h2 className="session-label">Upcoming class</h2>
-        <button
-          type="button"
-          className="add-details-button"
-          onClick={() => navigate(`/during-class/${groupId}/session/${sessionId}/upcoming`)}
-        >
-          Add Details
-        </button>
+        <h2 className="session-label">Upcoming Class</h2>
+        <div className="button-group">
+          <button
+            type="button"
+            className="add-details-button"
+            onClick={() =>
+              navigate(`/during-class/${groupId}/session/${sessionId}/upcoming`)
+            }
+          >
+            Add Details
+          </button>
+
+          <button
+            type="button"
+            className="add-details-button"
+            onClick={() =>
+              navigate(`/during-class/${groupId}/session/${sessionId}/assignments`)
+            }
+          >
+            Add Assignment Details
+          </button>
+        </div>
       </section>
 
       {/* ---- students ---- */}
-      <section className="session-section">
+      {/* <section className="session-section">
         <h2 className="students-heading">Students</h2>
         <div className="student-list">
           {students.map((s) => (
@@ -132,7 +148,7 @@ function ClassSessionScreen() {
             </button>
           ))}
         </div>
-      </section>
+      </section> */}
     </div>
   )
 }

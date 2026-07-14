@@ -7,13 +7,13 @@ const classGroups = [
     id: '11-Calculus',
     grade: '11',
     subject: 'Calculus',
-    sessionCount: 10
+    sessions: ['E1', 'E2', 'E3', 'E4', 'E5', 'E6', 'E7', 'E8', 'E9', 'E10']
   },
   {
     id: '12-Algebra',
     grade: '12',
     subject: 'Algebra',
-    sessionCount: 1
+    sessions: ['M4']
   }
 ]
 
@@ -31,11 +31,14 @@ function ClassGroupsScreen() {
               {group.grade} - {group.subject}
             </h2>
             <div className="session-grid">
-              {Array.from({ length: group.sessionCount }, (_, i) => (
+              {group.sessions.map((session) => (
                 <SessionSquare
-                  key={`${group.id}-${i + 1}`}
-                  label={`E${i + 1}`}
-                  onClick={() => navigate(`/during-class/${group.id}/session/E${i + 1}`)}
+                  key={`${group.id}-${session}`}
+                  label={session}
+                  onClick={() => {
+                     console.log(session);
+                    navigate(`/during-class/${group.id}/session/${session}`);
+                  }}
                 />
               ))}
             </div>

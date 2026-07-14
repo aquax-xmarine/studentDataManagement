@@ -1,0 +1,110 @@
+.assignment-page {
+  box-sizing: border-box;
+  position: relative;
+  min-height: 100vh;
+  padding: 48px 20px 40px;
+  background: #f7f5f0;
+  font-family: 'Montserrat', -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.assignment-title {
+  width: 100%;
+  max-width: 380px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #2f3e3a;
+  margin: 0 0 16px;
+  letter-spacing: 0.01em;
+}
+
+.assignment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 380px;
+}
+
+.assignment-button {
+  width: 100%;
+  border: none;
+  background: #34443f;
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 14px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.assignment-button:hover {
+  background: #34443f;
+}
+
+.assignment-button:active {
+  transform: scale(0.98);
+}
+
+.assignment-button:focus-visible {
+  outline: 2px solid #b8860b;
+  outline-offset: 2px;
+}
+
+.new-assignment-button {
+  width: 100%;
+  border: none;
+  background: #34443f;
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 14px;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.new-assignment-button:hover {
+  background: #34443f;
+}
+
+.new-assignment-button:active {
+  transform: scale(0.98);
+}
+
+.new-assignment-button:focus-visible {
+  outline: 2px solid #b8860b;
+  outline-offset: 2px;
+}
+
+.plus-icon {
+  width: 26px;
+  height: 26px;
+
+  background: #e0a778;
+  color: #34443f;
+
+  border-radius: 30%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+}

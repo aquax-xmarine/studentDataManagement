@@ -1,0 +1,133 @@
+.remarks-page {
+  box-sizing: border-box;
+  position: relative;
+  min-height: 100vh;
+  padding: 48px 20px 40px;
+  background: #f7f5f0;
+  font-family: 'Montserrat', -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.remarks-title {
+  width: 100%;
+  max-width: 380px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #2f3e3a;
+  margin: 0 0 20px;
+  letter-spacing: 0.01em;
+}
+
+.student-name-pill {
+  width: 100%;
+  max-width: 380px;
+  box-sizing: border-box;
+  background: #34443f;
+  color: #e0a778;
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.remarks-card {
+  width: 100%;
+  max-width: 380px;
+  background: #a3c0b3;
+  border-radius: 24px;
+  padding: 18px;
+  margin-bottom: 16px;
+}
+
+.remarks-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  background: #34443f;
+  color: #ffffff;
+  border: none;
+  border-radius: 14px;
+  padding: 16px;
+  resize: vertical;
+  min-height: 140px;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.remarks-textarea::placeholder {
+  color: #e0a778;
+  opacity: 1;
+}
+
+.remarks-textarea:focus-visible {
+  outline: 2px solid #b8860b;
+  outline-offset: 2px;
+}
+
+.remarks-footer {
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.remarks-save-button {
+  background: #34443f;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 28px;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: background 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
+}
+
+.remarks-save-button:hover {
+  background: #3f544d;
+}
+
+.remarks-save-button:active {
+  transform: scale(0.98);
+}
+
+.remarks-save-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.remarks-save-button:focus-visible {
+  outline: 2px solid #b8860b;
+  outline-offset: 2px;
+}
+
+.remarks-saved-message {
+  font-size: 13px;
+  font-weight: 600;
+  color: #2f3e3a;
+}
+
+.remarks-status {
+  width: 100%;
+  max-width: 380px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #2f3e3a;
+  text-align: center;
+}
+
+.remarks-status--error {
+  color: #b8461f;
+}

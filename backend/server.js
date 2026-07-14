@@ -67,8 +67,9 @@ app.post("/api/login", async (req, res) => {
     }
 });
 
+
+// Load all students for a given assignment
 app.get("/api/assignments/:assignmentId/students", async (req, res) => {
-    console.log("===== STUDENTS ROUTE HIT =====");
     try {
         const { assignmentId } = req.params;
         console.log("Assignment ID:", assignmentId);
@@ -93,7 +94,6 @@ app.get("/api/assignments/:assignmentId/students", async (req, res) => {
             `,
             [assignmentId]
         );
-        console.log(result.rows);
         res.json(result.rows);
 
     } catch (error) {
@@ -103,6 +103,57 @@ app.get("/api/assignments/:assignmentId/students", async (req, res) => {
         });
     }
 });
+
+
+// Load a single student for a given assignment
+app.get("/api/assignments/:assignmentId/student/:studentId", async (req, res) => {
+
+    const { assignmentId, studentId } = req.params;
+
+    const result = await pool.query(
+        `
+        SELECT
+            s.id,
+            s.name,
+            ar.remarks
+        FROM students s
+        LEFT JOIN assignment_results ar
+            ON ar.student_id = s.id
+            AND ar.assignment_id = $1
+        WHERE s.id = $2
+        `,
+        [assignmentId, studentId]
+    );
+
+    res.json(result.rows[0]);
+});
+
+
+// Save remarks for a student for a given assignment
+app.post("/api/assignments/:assignmentId/student/:studentId/remarks", async (req, res) => {
+
+    const { assignmentId, studentId } = req.params;
+    const { remarks } = req.body;
+
+    const result = await pool.query(
+        `
+        INSERT INTO assignment_results
+            (assignment_id, student_id, remarks)
+        VALUES
+            ($1, $2, $3)
+
+        ON CONFLICT (assignment_id, student_id)
+        DO UPDATE
+        SET remarks = EXCLUDED.remarks
+
+        RETURNING *;
+        `,
+        [assignmentId, studentId, remarks]
+    );
+
+    res.json(result.rows[0]);
+});
+
 
 
 app.get("/api/students/:groupId/:section", async (req, res) => {
@@ -137,7 +188,7 @@ app.get("/api/students/:groupId/:section", async (req, res) => {
     }
 });
 
-
+// Load all assignments for a given group and section
 app.get("/api/assignments/:groupId/:section", async (req, res) => {
 
     const { groupId, section } = req.params;
@@ -163,7 +214,7 @@ app.get("/api/assignments/:groupId/:section", async (req, res) => {
 });
 
 
-
+// Create a new assignment for a given group and section
 app.post("/api/assignments", async (req, res) => {
 
     const { exercise, groupId, section } = req.body;
@@ -184,38 +235,29 @@ app.post("/api/assignments", async (req, res) => {
 });
 
 
-
-
-
-
+// Save marks for a student for a given assignment
 app.post("/api/assignments/:assignmentId/student/:studentId", async (req, res) => {
-    try {
-        const { assignmentId, studentId } = req.params;
-        const { marks } = req.body;
 
-        const result = await pool.query(
-            `
-            INSERT INTO assignment_results
+    const { assignmentId, studentId } = req.params;
+    const { marks } = req.body;
+
+    const result = await pool.query(
+        `
+        INSERT INTO assignment_results
             (assignment_id, student_id, marks)
-            VALUES ($1, $2, $3)
+        VALUES
+            ($1, $2, $3)
 
-            ON CONFLICT (assignment_id, student_id)
-            DO UPDATE
-            SET marks = EXCLUDED.marks
+        ON CONFLICT (assignment_id, student_id)
+        DO UPDATE
+        SET marks = EXCLUDED.marks
 
-            RETURNING *;
-            `,
-            [assignmentId, studentId, marks]
-        );
+        RETURNING *;
+        `,
+        [assignmentId, studentId, marks]
+    );
 
-        res.json(result.rows[0]);
-
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            error: error.message
-        });
-    }
+    res.json(result.rows[0]);
 });
 
 

@@ -1,20 +1,16 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "../styles/AssignmentStudents.css";
 import "../styles/common.css";
 
-function AssignmentStudents() {
-    const {
-        groupId,
-        sessionId,
-        assignmentId
-    } = useParams();
+const API_BASE = "http://localhost:3000/api";
 
-    console.log(groupId);
-    console.log(sessionId);
-    console.log(assignmentId);
+function AssignmentStudents() {
+    const { groupId, sessionId, assignmentId } = useParams();
+    const navigate = useNavigate();
 
     const [students, setStudents] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         fetchStudents();
@@ -22,27 +18,35 @@ function AssignmentStudents() {
 
     const fetchStudents = async () => {
         try {
+            setIsLoading(true);
 
             const response = await fetch(
-                `http://localhost:3000/api/assignments/${assignmentId}/students`
+                `${API_BASE}/assignments/${assignmentId}/students`
             );
-            console.log("Status:", response.status);
+
+            if (!response.ok) {
+                throw new Error(`Request failed with status ${response.status}`);
+            }
 
             const data = await response.json();
-            console.log("Students:", data);
-
             setStudents(data);
 
         } catch (error) {
-            console.error(error);
+            console.error("Failed to fetch students:", error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
     const saveMark = async (studentId, marks) => {
-        try {
+        // Optimistic update so the tap feels instant, corrected by the refetch below
+        setStudents((prev) =>
+            prev.map((s) => (s.id === studentId ? { ...s, marks } : s))
+        );
 
+        try {
             await fetch(
-                `http://localhost:3000/api/assignments/${assignmentId}/student/${studentId}`,
+                `${API_BASE}/assignments/${assignmentId}/student/${studentId}`,
                 {
                     method: "POST",
                     headers: {
@@ -55,8 +59,16 @@ function AssignmentStudents() {
             fetchStudents();
 
         } catch (error) {
-            console.error(error);
+            console.error("Failed to save mark:", error);
+            // Roll back on failure since the optimistic update above may be wrong
+            fetchStudents();
         }
+    };
+
+    const goToStudent = (studentId) => {
+        navigate(
+            `/during-class/${groupId}/session/${sessionId}/assignments/${assignmentId}/student/${studentId}`
+        );
     };
 
     return (
@@ -66,31 +78,41 @@ function AssignmentStudents() {
             <h2 className="assignment-students-title">Students - {sessionId}</h2>
 
             <div className="assignment-students-card">
-                {students.map((student) => (
+                {isLoading && (
+                    <p className="assignment-students-status">Loading students…</p>
+                )}
 
+                {!isLoading && students.length === 0 && (
+                    <p className="assignment-students-status">No students yet.</p>
+                )}
+
+                {!isLoading && students.map((student) => (
                     <div key={student.id} className="student-mark-row">
 
-                        <span className="student-mark-row__name">
+                        <button
+                            type="button"
+                            className="student-mark-row__name"
+                            onClick={() => goToStudent(student.id)}
+                        >
                             {student.name}
-                        </span>
+                        </button>
 
                         <div className="student-mark-row__marks">
-                            {[1, 2, 3, 4, 5].map(mark => (
-
+                            {[1, 2, 3, 4, 5].map((mark) => (
                                 <button
                                     key={mark}
                                     type="button"
                                     className={`student-mark-button${student.marks === mark ? " is-selected" : ""}`}
+                                    aria-pressed={student.marks === mark}
+                                    aria-label={`Give ${student.name} a mark of ${mark}`}
                                     onClick={() => saveMark(student.id, mark)}
                                 >
                                     {mark}
                                 </button>
-
                             ))}
                         </div>
 
                     </div>
-
                 ))}
             </div>
 

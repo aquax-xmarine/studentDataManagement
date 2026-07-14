@@ -93,7 +93,9 @@ topic_covered students
 
 
 NOTES
-1. Edit and delete buttons
+1. Edit and delete buttons in list of assignments
+2. Creating new assignment says localhost
+
 
 
 

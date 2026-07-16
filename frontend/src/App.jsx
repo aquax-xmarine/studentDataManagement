@@ -10,6 +10,7 @@ import Loginpage from './pages/Login'
 import AssignmentList from './pages/AssignmentList'
 import AssignmentStudents from './pages/AssignmentStudents'
 import StudentRemarks from './pages/StudentRemarks'
+import ClassRemarks from './pages/ClassRemarks'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/analysis" element={<Analysis />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/during-class/:groupId/session/:sessionId" element={<ClassSessionScreen />} />
+        <Route path="/during-class/:groupId/session/:sessionId/remarks" element={<ClassRemarks />} />
         <Route path="/during-class/:groupId/session/:sessionId/assignments" element={<AssignmentList />} />
         <Route path="/during-class/:groupId/session/:sessionId/assignments/:assignmentId" element={<AssignmentStudents />} />
         <Route path="/during-class/:groupId/session/:sessionId/assignments/:assignmentId/student/:studentId" element={<StudentRemarks />} />

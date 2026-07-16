@@ -68,6 +68,200 @@ app.post("/api/login", async (req, res) => {
 });
 
 
+// Get previous class's remarks (topics covered)
+// app.post("/api/class-remarks/:groupId/:section", async (req, res) => {
+
+//     const { groupId, section } = req.params;
+//     const { topicsCovered } = req.body;
+
+//     const [grade, subject] = groupId.split("-");
+
+//     const today = new Date().toLocaleDateString("en-US", {
+//         weekday: "long"
+//     });
+
+//     const schedule = await pool.query(
+//         `
+//         SELECT id
+//         FROM teacher_schedule
+//         WHERE day = $1
+//         AND grade = $2
+//         AND LOWER(subject) = LOWER($3)
+//         AND section = $4
+//         `,
+//         [
+//             today,
+//             grade,
+//             subject,
+//             section
+//         ]
+//     );
+
+//     if (schedule.rows.length === 0) {
+//         return res.status(404).json({
+//             message: "No class scheduled today."
+//         });
+//     }
+
+//     const scheduleId = schedule.rows[0].id;
+
+//     const result = await pool.query(
+//         `
+//         INSERT INTO class_remarks
+//             (schedule_id, class_date, topics_covered)
+//         VALUES
+//             ($1, CURRENT_DATE, $2)
+
+//         ON CONFLICT (schedule_id, class_date)
+//         DO UPDATE
+//         SET topics_covered = EXCLUDED.topics_covered
+
+//         RETURNING *;
+//         `,
+//         [scheduleId, topicsCovered]
+//     );
+
+//     res.json(result.rows[0]);
+// });
+
+
+// // Get today's remarks for a class
+app.get("/api/class-remarks/:groupId/:section", async (req, res) => {
+    try {
+
+        const { groupId, section } = req.params;
+        const [grade, subject] = groupId.split("-");
+
+        const today = new Date().toLocaleDateString("en-US", {
+            weekday: "long"
+        });
+
+        // Find today's schedule
+        const schedule = await pool.query(
+            `
+            SELECT id
+            FROM teacher_schedule
+            WHERE day = $1
+            AND grade = $2
+            AND LOWER(subject) = LOWER($3)
+            AND section = $4
+            `,
+            [
+                today,
+                grade,
+                subject,
+                section
+            ]
+        );
+
+        if (schedule.rows.length === 0) {
+            return res.status(404).json({
+                message: "No class scheduled today."
+            });
+        }
+
+        const scheduleId = schedule.rows[0].id;
+
+        // Get today's remarks
+        const result = await pool.query(
+            `
+            SELECT *
+            FROM class_remarks
+            WHERE schedule_id = $1
+            AND class_date = CURRENT_DATE
+            `,
+            [scheduleId]
+        );
+
+        res.json(result.rows[0] || null);
+
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            error: error.message
+        });
+    }
+});
+
+
+// Save remarks for a class (topics covered)
+// Save remarks for today's class
+app.post("/api/class-remarks/:groupId/:section", async (req, res) => {
+    try {
+
+        const { groupId, section } = req.params;
+        const { topicsCovered } = req.body;
+
+        const [grade, subject] = groupId.split("-");
+
+        const today = new Date().toLocaleDateString("en-US", {
+            weekday: "long"
+        });
+
+        console.log("Today:", today);
+
+        // Find today's schedule
+        const schedule = await pool.query(
+            `
+            SELECT id
+            FROM teacher_schedule
+            WHERE day = $1
+            AND grade = $2
+            AND LOWER(subject) = LOWER($3)
+            AND section = $4
+            `,
+            [
+                today,
+                grade,
+                subject,
+                section
+            ]
+        );
+
+        console.log(schedule.rows);
+
+        if (schedule.rows.length === 0) {
+            return res.status(404).json({
+                message: "No class scheduled today."
+            });
+        }
+
+        const scheduleId = schedule.rows[0].id;
+
+        const result = await pool.query(
+            `
+            INSERT INTO class_remarks
+                (schedule_id, class_date, topics_covered)
+            VALUES
+                ($1, CURRENT_DATE, $2)
+
+            ON CONFLICT (schedule_id, class_date)
+            DO UPDATE
+            SET
+                topics_covered = EXCLUDED.topics_covered
+
+            RETURNING *;
+            `,
+            [
+                scheduleId,
+                topicsCovered
+            ]
+        );
+
+        res.json(result.rows[0]);
+
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            error: error.message
+        });
+    }
+});
+
+
+
 // Load all students for a given assignment
 app.get("/api/assignments/:assignmentId/students", async (req, res) => {
     try {
@@ -152,6 +346,44 @@ app.post("/api/assignments/:assignmentId/student/:studentId/remarks", async (req
     );
 
     res.json(result.rows[0]);
+});
+
+// Check if today's class exists
+app.get("/api/class-schedule/:groupId/:section", async (req, res) => {
+    try {
+        const { groupId, section } = req.params;
+        const [grade, subject] = groupId.split("-");
+
+        const today = new Date().toLocaleDateString("en-US", {
+            weekday: "long",
+        });
+
+        const result = await pool.query(
+            `
+            SELECT id
+            FROM teacher_schedule
+            WHERE day = $1
+            AND grade = $2
+            AND LOWER(subject) = LOWER($3)
+            AND section = $4
+            `,
+            [
+                today,
+                grade,
+                subject,
+                section
+            ]
+        );
+
+        res.json({
+            scheduled: result.rows.length > 0
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            error: error.message
+        });
+    }
 });
 
 
@@ -259,10 +491,6 @@ app.post("/api/assignments/:assignmentId/student/:studentId", async (req, res) =
 
     res.json(result.rows[0]);
 });
-
-
-
-
 
 
 

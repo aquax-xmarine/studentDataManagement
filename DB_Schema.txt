@@ -82,8 +82,24 @@ CREATE TABLE assignment_results (
 
 
 
+CREATE TABLE class_remarks (
+    id SERIAL PRIMARY KEY,
+
+    schedule_id INTEGER NOT NULL
+        REFERENCES teacher_schedule(id),
+
+    class_date DATE NOT NULL,
+
+    topics_covered TEXT NOT NULL,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    UNIQUE(schedule_id, class_date)
+);
 
 
+
+-----------------------------------------
 
 
 
@@ -95,6 +111,11 @@ topic_covered students
 NOTES
 1. Edit and delete buttons in list of assignments
 2. Creating new assignment says localhost
+3. The assignment remarks UI improve like class remarks UI
+4. Thoughts on disabling the 'add details' function when the class isn't scheduled for that day
+
+
+net stop postgresql-x64-18
 
 
 

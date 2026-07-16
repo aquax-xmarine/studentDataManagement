@@ -45,14 +45,14 @@
 .session-section {
   width: 100%;
   max-width: 380px;
-  margin-bottom: 32px;
+  margin-bottom: 10px;
 }
 
 .session-label {
   font-size: 16px;
   font-weight: 500;
   color: #6b7a76;
-  margin: 0 0 14px;
+  margin: 15px 0 14px;
 }
 
 .students-heading {
@@ -171,14 +171,7 @@
   border-radius: 16px;
   padding: 18px;
   cursor: pointer;
-  transition: background 0.15s ease, transform 0.15s ease;
-
-}
-
-.button-group {
-  display: flex;
-  flex-direction: column; /* Stacked vertically */
-  gap: 16px;              /* Space between buttons */
+  transition: background 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
 }
 
 .add-details-button:hover {
@@ -189,6 +182,43 @@
   transform: scale(0.98);
 }
 
+.add-details-button:disabled {
+  background: #dfe3e0;
+  color: #8a948f;
+  cursor: not-allowed;
+  opacity: 0.8;
+  transform: none;
+}
+
+.add-details-button:disabled:hover {
+  background: #dfe3e0;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.schedule-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f3e6d8;
+  color: #8a5a2b;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin: 0;
+  text-align: center;
+  justify-content: center;
+}
+
+.schedule-message::before {
+  content: "⏸";
+  font-size: 14px;
+}
 /* ---- students list ---- */
 
 .student-list {

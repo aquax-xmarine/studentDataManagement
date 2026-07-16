@@ -17,6 +17,7 @@ const mockSession = {
 }
 
 function ClassSessionScreen() {
+  const [isScheduledToday, setIsScheduledToday] = useState(false);
   const { groupId, sessionId } = useParams()
   const navigate = useNavigate()
 
@@ -26,29 +27,17 @@ function ClassSessionScreen() {
 
   useEffect(() => {
 
-    async function fetchStudents() {
-      try {
+    async function checkSchedule() {
+      const response = await fetch(
+        `http://localhost:3000/api/class-schedule/${groupId}/${sessionId}`
+      );
 
-        const response = await fetch(
-          `http://localhost:3000/api/students/${groupId}/${sessionId}`
-        )
+      const data = await response.json();
 
-        const data = await response.json()
-
-        setStudents(data)
-
-      } catch (error) {
-
-        console.error(
-          "Error fetching students:",
-          error
-        )
-
-      }
+      setIsScheduledToday(data.scheduled);
     }
 
-
-    fetchStudents()
+    checkSchedule();
 
   }, [groupId, sessionId])
 
@@ -85,6 +74,19 @@ function ClassSessionScreen() {
           </div>
         </div>
 
+        <button
+          type="button"
+          className="add-details-button"
+          onClick={() =>
+            navigate(`/during-class/${groupId}/session/${sessionId}/assignments`)
+          }
+        >
+          Add Assignment Details
+        </button>
+
+      </section>
+
+      <section className="session-section">
         <h2 className="session-label">Previous Class</h2>
 
         <div className="last-completed-card">
@@ -102,6 +104,7 @@ function ClassSessionScreen() {
             ))}
           </div>
         </div>
+
       </section>
 
       {/* ---- upcoming class ---- */}
@@ -109,46 +112,24 @@ function ClassSessionScreen() {
         <h2 className="session-label">Upcoming Class</h2>
         <div className="button-group">
           <button
-            type="button"
             className="add-details-button"
+            disabled={!isScheduledToday}
             onClick={() =>
-              navigate(`/during-class/${groupId}/session/${sessionId}/upcoming`)
+              navigate(`/during-class/${groupId}/session/${sessionId}/remarks`)
             }
           >
             Add Details
           </button>
 
-          <button
-            type="button"
-            className="add-details-button"
-            onClick={() =>
-              navigate(`/during-class/${groupId}/session/${sessionId}/assignments`)
-            }
-          >
-            Add Assignment Details
-          </button>
+          {!isScheduledToday && (
+            <p className="schedule-message">
+              No class is scheduled today.
+            </p>
+          )}
+
+
         </div>
       </section>
-
-      {/* ---- students ---- */}
-      {/* <section className="session-section">
-        <h2 className="students-heading">Students</h2>
-        <div className="student-list">
-          {students.map((s) => (
-            <button
-              key={s.id}
-              type="button"
-              className="student-row__header"
-              onClick={() => navigate(`/during-class/${groupId}/session/${sessionId}/students/${s.id}`)}
-            >
-              <span className="student-row__name">
-                {s.roll_no}. {s.name}
-                {s.note ? <span className="student-row__note-preview"> ({s.note})</span> : null}
-              </span>
-            </button>
-          ))}
-        </div>
-      </section> */}
     </div>
   )
 }

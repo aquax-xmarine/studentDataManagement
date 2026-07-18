@@ -64,12 +64,8 @@
   outline: 2px solid #b8860b;
   outline-offset: 2px;
 }
-
 .save-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
+  display: block;
   margin-top: 12px;
 }
 
@@ -84,7 +80,22 @@
   font-family: inherit;
   font-size: 14px;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: background 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
+}
+
+.saved-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #2f3e3a;
+  height: 44px;
 }
 
 .save-button:hover {
@@ -139,7 +150,7 @@
   width: 100%;
   box-sizing: border-box;
   background: #34443f;
-  color: #e0a778;
+  color: #ffffff;
   border: none;
   border-radius: 12px;
   padding: 12px 16px;

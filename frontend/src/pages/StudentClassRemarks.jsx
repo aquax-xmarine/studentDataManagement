@@ -120,35 +120,40 @@ function StudentClassRemarks() {
                     className={quickLinks.distracted ? "quick-button active" : "quick-button"}
                     onClick={() => toggleLink("distracted")}
                 >
-                    Off Task / Distracted
+                    <span className="quick-button-check">✓</span>
+                    <span>Off Task / Distracted</span>
                 </button>
 
                 <button
                     className={quickLinks.participating ? "quick-button active" : "quick-button"}
                     onClick={() => toggleLink("participating")}
                 >
-                    Participating
+                    <span className="quick-button-check">✓</span>
+                    <span>Participating</span>
                 </button>
 
                 <button
                     className={quickLinks.great_effort ? "quick-button active" : "quick-button"}
                     onClick={() => toggleLink("great_effort")}
                 >
-                    Great Effort
+                    <span className="quick-button-check">✓</span>
+                    <span>Great Effort</span>
                 </button>
 
                 <button
                     className={quickLinks.class_disturbance ? "quick-button active" : "quick-button"}
                     onClick={() => toggleLink("class_disturbance")}
                 >
-                    Class Disturbance
+                    <span className="quick-button-check">✓</span>
+                    <span>Class Disturbance</span>
                 </button>
 
                 <button
                     className={quickLinks.late_arrival ? "quick-button active" : "quick-button"}
                     onClick={() => toggleLink("late_arrival")}
                 >
-                    Late Arrival
+                    <span className="quick-button-check">✓</span>
+                    <span>Late Arrival</span>
                 </button>
 
             </div>

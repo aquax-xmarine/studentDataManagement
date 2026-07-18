@@ -15,7 +15,10 @@ const mockSession = {
   ]
 }
 
+
 function ClassSessionScreen() {
+  const DEV_MODE = false;
+
   const [isScheduledToday, setIsScheduledToday] = useState(false);
   const [lastCompleted, setLastCompleted] = useState(null);
 
@@ -78,7 +81,6 @@ function ClassSessionScreen() {
 
       {/* ---- previous class ---- */}
       <section className="session-section">
-        <h2 className="session-label">Class Status</h2>
 
         <div className="stat-card">
           <div className="stat-card__item">
@@ -131,9 +133,18 @@ function ClassSessionScreen() {
       <section className="session-section">
         <h2 className="session-label">Upcoming Class</h2>
         <div className="button-group">
+          {/* <button
+            className="add-details-button"
+            disabled={!(DEV_MODE || isScheduledToday)}
+            onClick={() =>
+              navigate(`/during-class/${groupId}/session/${sessionId}/remarks`)
+            }
+          >
+            Add Details
+          </button> */}
+
           <button
             className="add-details-button"
-            disabled={!isScheduledToday}
             onClick={() =>
               navigate(`/during-class/${groupId}/session/${sessionId}/remarks`)
             }
@@ -141,7 +152,7 @@ function ClassSessionScreen() {
             Add Details
           </button>
 
-          {!isScheduledToday && (
+          {!DEV_MODE && !isScheduledToday && (
             <p className="schedule-message">
               No class is scheduled today.
             </p>

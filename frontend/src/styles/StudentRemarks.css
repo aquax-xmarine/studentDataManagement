@@ -27,7 +27,7 @@
   box-sizing: border-box;
   background: hsl(161, 13%, 24%);
   color: #ffffff;
-  border-radius: 14px;
+  border-radius: 12px;
   padding: 14px 16px;
   margin-bottom: 16px;
 
@@ -40,7 +40,7 @@
   width: 100%;
   max-width: 380px;
   background: #a3c0b3;
-  border-radius: 24px;
+  border-radius: 12px;
   padding: 18px;
   margin-bottom: 16px;
 }
@@ -51,7 +51,7 @@
   background: #34443f;
   color: #ffffff;
   border: none;
-  border-radius: 14px;
+  border-radius: 12px;
   padding: 16px;
   resize: vertical;
   min-height: 140px;
@@ -75,17 +75,20 @@
 .remarks-footer {
   width: 100%;
   max-width: 380px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
+  display: block;
 }
 
 .remarks-save-button {
+  box-sizing: border-box;
+  width: 100%;
+  height: 44px;
   background: #34443f;
   color: #ffffff;
   border: none;
   border-radius: 12px;
-  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   font-family: inherit;
   font-size: 14px;
@@ -114,20 +117,24 @@
 }
 
 .remarks-saved-message {
+  box-sizing: border-box;
+  width: 100%;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 0 14px;
+  border-radius: 12px;
+  background: #e5f0e9;
+
   font-size: 13px;
   font-weight: 600;
   color: #2f3e3a;
 }
 
-.remarks-status {
-  width: 100%;
-  max-width: 380px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #2f3e3a;
-  text-align: center;
-}
-
-.remarks-status--error {
-  color: #b8461f;
+.remarks-saved-message::before {
+  content: "✓";
+  font-weight: 700;
 }

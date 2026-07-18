@@ -129,7 +129,7 @@ function StudentRemarks() {
                 </button>
 
                 {savedMessage && (
-                    <span className="remarks-saved-message">Saved</span>
+                    <span className="remarks-saved-message">Saved Successfully!</span>
                 )}
             </div>
 

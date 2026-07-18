@@ -8,7 +8,6 @@ import '../styles/common.css'
 const mockSession = {
   taught: 7,
   remaining: 8,
-  lastCompleted: 'Exercise 14.3 - 14 c',
   studentsToAddress: [
     { id: 's5', index: 5, name: 'Nikisha maaya', note: '<3' },
     { id: 's5b', index: 5, name: 'Nikisha maaya', note: '<3' },
@@ -18,6 +17,8 @@ const mockSession = {
 
 function ClassSessionScreen() {
   const [isScheduledToday, setIsScheduledToday] = useState(false);
+  const [lastCompleted, setLastCompleted] = useState(null);
+
   const { groupId, sessionId } = useParams()
   const navigate = useNavigate()
 
@@ -37,7 +38,24 @@ function ClassSessionScreen() {
       setIsScheduledToday(data.scheduled);
     }
 
+
+    async function fetchLastCompleted() {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/api/class-remarks/last/${groupId}/${sessionId}`
+        );
+
+        const data = await response.json();
+
+        setLastCompleted(data);
+
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
     checkSchedule();
+    fetchLastCompleted();
 
   }, [groupId, sessionId])
 
@@ -91,7 +109,9 @@ function ClassSessionScreen() {
 
         <div className="last-completed-card">
           <span className="last-completed-card__label">last completed</span>
-          <span className="last-completed-card__value">{mockSession.lastCompleted}</span>
+          <span className="last-completed-card__value">
+            {lastCompleted?.topics_covered || "No remarks recorded"}
+          </span>
         </div>
 
         <div className="address-card">

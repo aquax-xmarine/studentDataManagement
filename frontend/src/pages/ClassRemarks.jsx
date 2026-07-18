@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "../styles/ClassRemarks.css";
 import "../styles/common.css";
 
 const API_BASE = "http://localhost:3000/api";
 
 function ClassRemarks() {
+    const navigate = useNavigate();
+    
     const { groupId, sessionId } = useParams();
 
     const [topicsCovered, setTopicsCovered] = useState("");
@@ -156,6 +158,11 @@ function ClassRemarks() {
                         key={student.id}
                         type="button"
                         className="student-button"
+                        onClick={() =>
+                            navigate(
+                                `/during-class/${groupId}/session/${sessionId}/student/${student.id}`
+                            )
+                        }
                     >
                         {student.name}
                         {student.note && ` (${student.note})`}

@@ -11,6 +11,7 @@ import AssignmentList from './pages/AssignmentList'
 import AssignmentStudents from './pages/AssignmentStudents'
 import StudentRemarks from './pages/StudentRemarks'
 import ClassRemarks from './pages/ClassRemarks'
+import StudentClassRemarks from './pages/StudentClassRemarks'
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/during-class/:groupId/session/:sessionId/assignments" element={<AssignmentList />} />
         <Route path="/during-class/:groupId/session/:sessionId/assignments/:assignmentId" element={<AssignmentStudents />} />
         <Route path="/during-class/:groupId/session/:sessionId/assignments/:assignmentId/student/:studentId" element={<StudentRemarks />} />
+        <Route path="/during-class/:groupId/session/:sessionId/student/:studentId" element={<StudentClassRemarks />} />
       </Routes>
     </BrowserRouter>
   )

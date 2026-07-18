@@ -101,10 +101,34 @@ CREATE TABLE class_remarks (
 
 -----------------------------------------
 
+CREATE TABLE student_remarks (
+    id SERIAL PRIMARY KEY,
+
+    schedule_id INTEGER NOT NULL
+        REFERENCES teacher_schedule(id),
+
+    class_date DATE NOT NULL,
+
+    student_id INTEGER NOT NULL
+        REFERENCES students(id),
+
+    remarks TEXT,
+
+    distracted BOOLEAN DEFAULT FALSE,
+    participating BOOLEAN DEFAULT FALSE,
+    great_effort BOOLEAN DEFAULT FALSE,
+    class_disturbance BOOLEAN DEFAULT FALSE,
+    late_arrival BOOLEAN DEFAULT FALSE,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    UNIQUE(schedule_id, class_date, student_id)
+);
 
 
-DETAILS
-topic_covered students
+
+-----------------------------------------
+
 
 
 
@@ -113,6 +137,11 @@ NOTES
 2. Creating new assignment says localhost
 3. The assignment remarks UI improve like class remarks UI
 4. Thoughts on disabling the 'add details' function when the class isn't scheduled for that day
+5. What if the teacher wants to log previous and future class's data?
+6. tick marks for selected icons
+7. ui problem add details-class
+ 
+
 
 
 net stop postgresql-x64-18

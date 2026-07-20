@@ -73,7 +73,7 @@ function AssignmentStudents() {
 
     return (
         <div className="assignment-students-page">
-            <span className="class-groups-eyebrow">Classroom</span>
+            <span className="choose-eyebrow">Classroom</span>
 
             <h2 className="assignment-students-title">Students - {sessionId}</h2>
 

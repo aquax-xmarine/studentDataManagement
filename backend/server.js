@@ -67,6 +67,215 @@ app.post("/api/login", async (req, res) => {
     }
 });
 
+
+app.get("/api/students/:studentId", async (req, res) => {
+    try {
+        const { studentId } = req.params;
+
+        console.log("studentId =", studentId);
+
+        const result = await pool.query(
+            `
+            SELECT *
+            FROM students
+            WHERE id = $1
+            `,
+            [studentId]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({
+                message: "Student not found."
+            });
+        }
+
+        res.json(result.rows[0]);
+
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            error: error.message
+        });
+    }
+});
+
+// Get students who had remarks in the last scheduled class
+app.get("/api/student-remarks/last/:groupId/:section", async (req, res) => {
+    try {
+
+        const { groupId, section } = req.params;
+        const [grade, subject] = groupId.split("-");
+
+        const today = new Date();
+        // const today = new Date("2026-07-17");
+
+        const weekDays = [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+        ];
+
+        const todayName = today.toLocaleDateString("en-US", {
+            weekday: "long"
+        });
+
+        const todayIndex = weekDays.indexOf(todayName);
+
+        for (let i = 1; i <= 7; i++) {
+
+            const index = (todayIndex - i + 7) % 7;
+            const dayName = weekDays[index];
+
+            const previousDate = new Date(today);
+            previousDate.setDate(today.getDate() - i);
+
+            const schedule = await pool.query(
+                `
+                SELECT id
+                FROM teacher_schedule
+                WHERE day = $1
+                AND grade = $2
+                AND LOWER(subject) = LOWER($3)
+                AND section = $4
+                `,
+                [
+                    dayName,
+                    grade,
+                    subject,
+                    section
+                ]
+            );
+
+            if (schedule.rows.length === 0) {
+                continue;
+            }
+
+            const scheduleId = schedule.rows[0].id;
+
+            const result = await pool.query(
+                `
+                SELECT
+                    s.id,
+                    s.roll_no,
+                    s.name,
+                    scr.remarks
+                FROM student_remarks scr
+                JOIN students s
+                    ON s.id = scr.student_id
+                WHERE scr.schedule_id = $1
+                AND scr.class_date = $2
+                ORDER BY s.roll_no
+                `,
+                [
+                    scheduleId,
+                    previousDate.toISOString().split("T")[0]
+                ]
+            );
+
+            return res.json(result.rows);
+        }
+
+        return res.json([]);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            error: error.message
+        });
+    }
+});
+
+
+app.get("/api/student-remarks/last/:groupId/:section/:studentId", async (req, res) => {
+    try {
+
+        const { groupId, section, studentId } = req.params;
+
+        const [grade, subject] = groupId.split("-");
+
+        const today = new Date();
+        // const today = new Date("2026-07-17");
+
+        const weekDays = [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+        ];
+
+        const todayName = today.toLocaleDateString("en-US", {
+            weekday: "long"
+        });
+
+        const todayIndex = weekDays.indexOf(todayName);
+
+        for (let i = 1; i <= 7; i++) {
+
+            const index = (todayIndex - i + 7) % 7;
+            const dayName = weekDays[index];
+
+            const previousDate = new Date(today);
+            previousDate.setDate(today.getDate() - i);
+
+            const schedule = await pool.query(
+                `
+                SELECT id
+                FROM teacher_schedule
+                WHERE day = $1
+                AND grade = $2
+                AND LOWER(subject) = LOWER($3)
+                AND section = $4
+                `,
+                [
+                    dayName,
+                    grade,
+                    subject,
+                    section
+                ]
+            );
+
+            if (schedule.rows.length === 0) {
+                continue;
+            }
+
+            const scheduleId = schedule.rows[0].id;
+
+            const result = await pool.query(
+                `
+SELECT *
+FROM student_remarks
+WHERE student_id = $1
+AND schedule_id = $2
+AND class_date = $3
+`,
+                [
+                    studentId,
+                    scheduleId,
+                    previousDate.toISOString().split("T")[0]
+                ]
+            );
+
+            return res.json(result.rows[0] || null);
+
+        }
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            error: error.message
+        });
+    }
+});
+
+
 // // Get today's remarks for a class
 app.get("/api/class-remarks/:groupId/:section", async (req, res) => {
     try {
@@ -74,10 +283,10 @@ app.get("/api/class-remarks/:groupId/:section", async (req, res) => {
         const { groupId, section } = req.params;
         const [grade, subject] = groupId.split("-");
 
-        // const today = new Date().toLocaleDateString("en-US", {
-        //     weekday: "long"
-        // });
-        const today = "Friday";
+        const today = new Date().toLocaleDateString("en-US", {
+            weekday: "long"
+        });
+        // const today = "Friday";
 
         // Find today's schedule
         const schedule = await pool.query(
@@ -137,13 +346,13 @@ app.post("/api/class-remarks/:groupId/:section", async (req, res) => {
 
         const [grade, subject] = groupId.split("-");
 
-        // const today = new Date().toLocaleDateString("en-US", {
-        //     weekday: "long"
-        // });
+        const today = new Date().toLocaleDateString("en-US", {
+            weekday: "long"
+        });
 
-        const today = "Friday";
+        // const today = "Friday";
 
-        console.log("Today:", today);
+        // console.log("Today:", today);
 
         // Find today's schedule
         const schedule = await pool.query(
@@ -298,11 +507,11 @@ app.get("/api/class-schedule/:groupId/:section", async (req, res) => {
         const { groupId, section } = req.params;
         const [grade, subject] = groupId.split("-");
 
-        // const today = new Date().toLocaleDateString("en-US", {
-        //     weekday: "long",
-        // });
+        const today = new Date().toLocaleDateString("en-US", {
+            weekday: "long",
+        });
 
-        const today = "Friday";
+        // const today = "Friday";
 
         const result = await pool.query(
             `
@@ -367,35 +576,6 @@ app.get("/api/students/:groupId/:section", async (req, res) => {
 });
 
 
-app.get("/api/students/:studentId", async (req, res) => {
-    try {
-        const { studentId } = req.params;
-
-        const result = await pool.query(
-            `
-            SELECT *
-            FROM students
-            WHERE id = $1
-            `,
-            [studentId]
-        );
-
-        if (result.rows.length === 0) {
-            return res.status(404).json({
-                message: "Student not found."
-            });
-        }
-
-        res.json(result.rows[0]);
-
-    } catch (error) {
-        console.error(error);
-
-        res.status(500).json({
-            error: error.message
-        });
-    }
-});
 
 
 // Get class remarks for a student for a given class session
@@ -405,11 +585,11 @@ app.get("/api/student-remarks/:groupId/:section/:studentId", async (req, res) =>
         const { groupId, section, studentId } = req.params;
         const [grade, subject] = groupId.split("-");
 
-        // const today = new Date().toLocaleDateString("en-US", {
-        //     weekday: "long"
-        // });
+        const today = new Date().toLocaleDateString("en-US", {
+            weekday: "long"
+        });
 
-        const today = "Friday";
+        // const today = "Friday";
 
         // Find today's schedule
         const schedule = await pool.query(
@@ -478,11 +658,11 @@ app.post("/api/student-remarks/:groupId/:section/:studentId", async (req, res) =
 
         const [grade, subject] = groupId.split("-");
 
-        // const today = new Date().toLocaleDateString("en-US", {
-        //     weekday: "long"
-        // });
+        const today = new Date().toLocaleDateString("en-US", {
+            weekday: "long"
+        });
 
-        const today = "Friday";
+        // const today = "Friday";
 
         // Find today's class
         const schedule = await pool.query(
@@ -645,9 +825,9 @@ app.get("/api/class-remarks/last/:groupId/:section", async (req, res) => {
         const { groupId, section } = req.params;
         const [grade, subject] = groupId.split("-");
 
-        // const today = new Date();
+        const today = new Date();
 
-        const today = new Date("2026-07-17");
+        // const today = new Date("2026-07-17");
 
         const weekDays = [
             "Sunday",
@@ -659,12 +839,10 @@ app.get("/api/class-remarks/last/:groupId/:section", async (req, res) => {
             "Saturday"
         ];
 
-        // const todayName = today.toLocaleDateString("en-US", {
-        //     weekday: "long"
-        // });
         const todayName = today.toLocaleDateString("en-US", {
             weekday: "long"
         });
+
 
         const todayIndex = weekDays.indexOf(todayName);
 
@@ -738,6 +916,10 @@ app.get("/api/class-remarks/last/:groupId/:section", async (req, res) => {
         });
     }
 });
+
+
+
+
 
 app.listen(3000, () => {
     console.log("Server running on port 3000");

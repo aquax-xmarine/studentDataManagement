@@ -51,8 +51,8 @@ function AssignmentList() {
     };
 
     return (
-        <div className="assignment-page">
-            <span className="class-groups-eyebrow">Classroom</span>
+        <div className="assignment-list-page">
+            <span className="choose-eyebrow">Classroom</span>
             <h2 className="assignment-title">Assignments - {sessionId}</h2>
 
             <div className="assignment-list">

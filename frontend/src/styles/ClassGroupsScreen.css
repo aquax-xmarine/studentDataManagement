@@ -1,4 +1,4 @@
-.class-groups-screen {
+.class-group-screen-page {
   box-sizing: border-box;
   position: relative;
   min-height: 100vh;
@@ -9,16 +9,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.class-groups-eyebrow {
-  align-self: flex-start;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #b8860b;
-  margin-bottom: 28px;
+  justify-content: center;
 }
 
 .class-group-list {
@@ -65,4 +56,8 @@
 .session-square:focus-visible {
   outline: 2px solid #b8860b;
   outline-offset: 2px;
+}
+
+.session-square {
+  color: white;
 }

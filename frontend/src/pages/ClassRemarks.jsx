@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import "../styles/ClassRemarks.css";
 import "../styles/common.css";
 
+
 const API_BASE = "http://localhost:3000/api";
 
 function ClassRemarks() {
@@ -95,9 +96,9 @@ function ClassRemarks() {
     };
 
     return (
-        <div className="upcoming-page">
+        <div className="class-remarks-page">
 
-            <span className="class-groups-eyebrow">
+            <span className="choose-eyebrow">
                 Classroom
             </span>
 

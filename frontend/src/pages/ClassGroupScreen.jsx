@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import SessionSquare from '../components/SessionSquare'
 import '../styles/ClassGroupsScreen.css'
+import '../styles/common.css'
 
 const classGroups = [
   {
@@ -21,8 +22,8 @@ function ClassGroupsScreen() {
   const navigate = useNavigate()
 
   return (
-    <div className="class-groups-screen">
-      <span className="class-groups-eyebrow">Classroom</span>
+    <div className="class-group-screen-page">
+      <span className="choose-eyebrow">Classroom</span>
 
       <div className="class-group-list">
         {classGroups.map((group) => (

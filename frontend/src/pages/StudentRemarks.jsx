@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import "../styles/StudentRemarks.css";
 import "../styles/common.css";
 
+
 const API_BASE = "http://localhost:3000/api";
 
 function StudentRemarks() {
@@ -96,9 +97,9 @@ function StudentRemarks() {
     }
 
     return (
-        <div className="remarks-page">
+        <div className="student-remarks-page">
 
-            <span className="class-groups-eyebrow">Classroom</span>
+            <span className="choose-eyebrow">Classroom</span>
 
             <div className="student-name-pill">
                 {student.name}

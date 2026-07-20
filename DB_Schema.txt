@@ -140,6 +140,8 @@ NOTES
 5. What if the teacher wants to log previous and future class's data?
 6. tick marks for selected icons
 7. ui problem add details-class
+8. save button is unstable
+9. Change today back to original and delete the added rows
  
 
 

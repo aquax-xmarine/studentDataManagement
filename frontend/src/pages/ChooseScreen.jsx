@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import OptionCard from '../components/OptionCard'
 import '../styles/ChooseScreen.css'
+import '../styles/common.css'
 
 const options = [
   {
@@ -42,7 +43,7 @@ function ChooseScreen() {
   const navigate = useNavigate()
 
   return (
-    <div className="choose-screen">
+    <div className="choose-screen-page">
       <span className="choose-eyebrow">Classroom</span>
       {/* <h1 className="choose-heading">Choose one to begin</h1> */}
       <div className="option-list">

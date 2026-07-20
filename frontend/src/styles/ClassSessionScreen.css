@@ -1,22 +1,14 @@
-.class-session-screen {
+.class-session-screen-page {
   box-sizing: border-box;
+  position: relative;
   min-height: 100vh;
-  padding: 40px 20px 60px;
+  padding: 90px 20px 40px;
   background: #f7f5f0;
   font-family: 'Montserrat', -apple-system, 'Segoe UI', Roboto, sans-serif;
+
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.class-groups-eyebrow {
-  align-self: flex-start;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #b8860b;
-  margin-bottom: 28px;
 }
 
 

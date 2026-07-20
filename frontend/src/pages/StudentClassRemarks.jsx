@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import "../styles/StudentClassRemarks.css";
 import "../styles/common.css";
 
+
 const API_BASE = "http://localhost:3000/api";
 
 function StudentClassRemarks() {
@@ -95,9 +96,9 @@ function StudentClassRemarks() {
     }
 
     return (
-        <div className="student-page">
+        <div className="student-class-remarks-page">
 
-            <span className="class-groups-eyebrow">Classroom</span>
+            <span className="choose-eyebrow">Classroom</span>
 
             <div className="student-name">
                 {student?.name}

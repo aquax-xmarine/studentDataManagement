@@ -4,7 +4,7 @@ import "../styles/ClassRemarks.css";
 import "../styles/common.css";
 import { API_URL } from '../config.js';
 
-const API_BASE = "${API_URL}/api";
+const API_BASE = `${API_URL}/api`;
 
 function ClassRemarks() {
     const navigate = useNavigate();

@@ -1,11 +1,23 @@
+// const { Pool } = require("pg");
+
+// const pool = new Pool({
+//     user: "postgres",
+//     host: "student-db",
+//     database: "studentdb",
+//     password: "24119",
+//     port: 5432
+// });
+
+// module.exports = pool;
+
+
 const { Pool } = require("pg");
 
 const pool = new Pool({
-    user: "postgres",
-    host: "student-db",
-    database: "studentdb",
-    password: "24119",
-    port: 5432
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
 module.exports = pool;

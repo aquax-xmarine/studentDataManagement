@@ -8,34 +8,24 @@ function AssignmentList() {
     const navigate = useNavigate();
     const { groupId, sessionId } = useParams();
 
-    console.log(groupId);
-    console.log(sessionId);
-
-
     const [assignments, setAssignments] = useState([]);
+    const [isCreating, setIsCreating] = useState(false);
+    const [exerciseName, setExerciseName] = useState("");
 
     useEffect(() => {
-
         fetch(`http://localhost:3000/api/assignments/${groupId}/${sessionId}`)
             .then(res => res.json())
             .then(data => setAssignments(data));
-
-
     }, [groupId, sessionId]);
 
     const createAssignment = async () => {
-
-        const exercise = prompt("Enter exercise name");
-
-        if (!exercise) return;
+        if (!exerciseName.trim()) return;
 
         const response = await fetch("http://localhost:3000/api/assignments", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                exercise,
+                exercise: exerciseName,
                 groupId,
                 section: sessionId
             })
@@ -45,8 +35,9 @@ function AssignmentList() {
             const updatedAssignments = await fetch(
                 `http://localhost:3000/api/assignments/${groupId}/${sessionId}`
             );
-
             setAssignments(await updatedAssignments.json());
+            setExerciseName("");
+            setIsCreating(false);
         }
     };
 
@@ -70,16 +61,32 @@ function AssignmentList() {
                     </button>
                 ))}
 
-                <button
-                    className="new-assignment-button"
-                    onClick={createAssignment}
-                >
-                    <span>New Assignment</span>
-
-                    <div className="plus-icon">
-                        +
+                {isCreating ? (
+                    <div className="new-assignment-form">
+                        <input
+                            className="new-assignment-input"
+                            autoFocus
+                            value={exerciseName}
+                            onChange={(e) => setExerciseName(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") createAssignment();
+                                if (e.key === "Escape") setIsCreating(false);
+                            }}
+                            placeholder="Exercise name"
+                        />
+                        <button className="new-assignment-confirm" onClick={createAssignment}>
+                            Add
+                        </button>
                     </div>
-                </button>
+                ) : (
+                    <button
+                        className="new-assignment-button"
+                        onClick={() => setIsCreating(true)}
+                    >
+                        <span>New Assignment</span>
+                        <div className="plus-icon">+</div>
+                    </button>
+                )}
             </div>
         </div>
     );

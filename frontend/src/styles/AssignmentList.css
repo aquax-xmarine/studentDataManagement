@@ -108,3 +108,40 @@
   font-weight: 700;
   line-height: 1;
 }
+
+.new-assignment-form {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.new-assignment-input {
+  flex: 1;
+  box-sizing: border-box;
+  background: #34443f;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.new-assignment-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.new-assignment-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(224, 167, 120, 0.4);
+}
+
+.new-assignment-confirm {
+  border: none;
+  background: #e0a778;
+  color: #34443f;
+  border-radius: 12px;
+  padding: 0 18px;
+  font-weight: 700;
+  cursor: pointer;
+}

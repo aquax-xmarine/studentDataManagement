@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import "../styles/AssignmentList.css";
 import "../styles/common.css";
+import { API_URL } from "../config.js";
 
 function AssignmentList() {
     const navigate = useNavigate();
@@ -13,7 +14,7 @@ function AssignmentList() {
     const [exerciseName, setExerciseName] = useState("");
 
     useEffect(() => {
-        fetch(`http://localhost:3000/api/assignments/${groupId}/${sessionId}`)
+        fetch(`${API_URL}/api/assignments/${groupId}/${sessionId}`)
             .then(res => res.json())
             .then(data => setAssignments(data));
     }, [groupId, sessionId]);
@@ -21,7 +22,7 @@ function AssignmentList() {
     const createAssignment = async () => {
         if (!exerciseName.trim()) return;
 
-        const response = await fetch("http://localhost:3000/api/assignments", {
+        const response = await fetch("${API_URL}/api/assignments", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -33,7 +34,7 @@ function AssignmentList() {
 
         if (response.ok) {
             const updatedAssignments = await fetch(
-                `http://localhost:3000/api/assignments/${groupId}/${sessionId}`
+                `${API_URL}/api/assignments/${groupId}/${sessionId}`
             );
             setAssignments(await updatedAssignments.json());
             setExerciseName("");

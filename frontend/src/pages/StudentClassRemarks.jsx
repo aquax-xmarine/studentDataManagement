@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "../styles/StudentClassRemarks.css";
 import "../styles/common.css";
+import { API_URL } from '../config.js';
 
 
-const API_BASE = "http://localhost:3000/api";
+const API_BASE = "${API_URL}/api";
 
 function StudentClassRemarks() {
     const { groupId, sessionId, studentId } = useParams();

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "../styles/common.css";
 import "../styles/PreviousStudentRemarks.css";
+import { API_URL } from '../config.js';
 
 
 function PreviousStudentRemarks() {
@@ -20,7 +21,7 @@ function PreviousStudentRemarks() {
     try {
       // student details
       const studentResponse = await fetch(
-        `http://localhost:3000/api/students/${studentId}`
+        `${API_URL}/api/students/${studentId}`
       );
 
       const studentData = await studentResponse.json();
@@ -28,7 +29,7 @@ function PreviousStudentRemarks() {
 
       // previous class remarks
       const remarksResponse = await fetch(
-        `http://localhost:3000/api/student-remarks/last/${groupId}/${sessionId}/${studentId}`
+        `${API_URL}/api/student-remarks/last/${groupId}/${sessionId}/${studentId}`
       );
 
       const remarksData = await remarksResponse.json();

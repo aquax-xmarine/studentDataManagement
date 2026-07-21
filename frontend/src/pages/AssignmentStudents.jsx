@@ -2,8 +2,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "../styles/AssignmentStudents.css";
 import "../styles/common.css";
+import { API_URL } from '../config.js';
 
-const API_BASE = "http://localhost:3000/api";
+const API_BASE = "${API_URL}/api";
 
 function AssignmentStudents() {
     const { groupId, sessionId, assignmentId } = useParams();

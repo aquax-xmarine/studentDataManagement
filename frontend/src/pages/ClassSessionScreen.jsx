@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import StudentRow from '../components/StudentRow'
 import '../styles/ClassSessionScreen.css'
 import '../styles/common.css'
-
+import { API_URL } from '../config.js'
 
 // Replace this with real data fetched using groupId / sessionId from the URL
 const mockSession = {
@@ -31,7 +31,7 @@ function ClassSessionScreen() {
 
     async function checkSchedule() {
       const response = await fetch(
-        `http://localhost:3000/api/class-schedule/${groupId}/${sessionId}`
+        `${API_URL}/api/class-schedule/${groupId}/${sessionId}`
       );
 
       const data = await response.json();
@@ -43,7 +43,7 @@ function ClassSessionScreen() {
     async function fetchLastCompleted() {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/class-remarks/last/${groupId}/${sessionId}`
+          `${API_URL}/api/class-remarks/last/${groupId}/${sessionId}`
         );
 
         const data = await response.json();
@@ -58,7 +58,7 @@ function ClassSessionScreen() {
     async function fetchStudentsToAddress() {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/student-remarks/last/${groupId}/${sessionId}`
+          `${API_URL}/api/student-remarks/last/${groupId}/${sessionId}`
         );
 
         const data = await response.json();
